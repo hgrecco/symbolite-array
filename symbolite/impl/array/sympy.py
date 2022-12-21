@@ -1,7 +1,7 @@
-
 import operator
 
 import sympy as sy
+
 arr = sy.IndexedBase("arr")
 
 op_getitem = operator.getitem

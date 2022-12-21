@@ -3,10 +3,11 @@
 ______________________________________________________________________
 
 [Symbolite](https://github.com/hgrecco/symbolite) allows you to
-create symbolic mathematical expressions. Just create a symbol 
+create symbolic mathematical expressions. Just create a symbol
 (or more) and operate with them as you will normally do in Python.
 
 This extension allows you to use arrays
+
 ```python
 >>> from symbolite.abstract import array
 >>> arr = array.Array("arr")
@@ -16,6 +17,7 @@ This extension allows you to use arrays
 ```
 
 and you can get one item.
+
 ```python
 >>> from symbolite.abstract import array
 >>> arr = array.Array("arr")
@@ -33,9 +35,8 @@ You can easily replace the symbols by the desired value.
 ```
 
 Included in this library are implementations for `sum` and `prod`,
-in the default implementation (based on python's math), NumPy, and 
+in the default implementation (based on python's math), NumPy, and
 SciPy. In SciPy, `Array` is also mapped to SciPy's `IndexedBase`.
-
 
 ### Installing:
 

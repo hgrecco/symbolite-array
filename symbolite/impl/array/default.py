@@ -1,7 +1,7 @@
-
-import operator
-from symbolite.translators import Unsupported
 import math
+import operator
+
+from symbolite.translators import Unsupported
 
 op_getitem = operator.getitem
 

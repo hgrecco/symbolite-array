@@ -1,8 +1,8 @@
-
 import operator
 
+from symbolite.operands import Function, Named, Operator, SymbolicExpression
+
 from symbolite.abstract import scalar
-from symbolite.operands import Operator, Named, Function, SymbolicExpression
 
 NAMESPACE = "libarray"
 
@@ -13,7 +13,6 @@ prod = Function("prod", namespace=NAMESPACE, arity=1)
 
 
 class Array(Named, SymbolicExpression):
-
     def __getitem__(self, item):
         return op_getitem(self, item)
 
@@ -26,8 +25,7 @@ def vectorize(expr, symbol_names, varname="arr"):
 
     arr = Array(varname)
 
-    reps = {scalar.Scalar(name): arr[ndx]
-            for ndx, name in it}
+    reps = {scalar.Scalar(name): arr[ndx] for ndx, name in it}
     return expr.replace(reps)
 
 

@@ -1,7 +1,7 @@
-
 import pytest
-from symbolite.abstract import array, scalar
 from symbolite.mappers import Unsupported
+
+from symbolite.abstract import array, scalar
 from symbolite.impl.array import default
 
 all_impl = {"default": default}
@@ -21,8 +21,6 @@ except ImportError:
     pass
 
 
-
-
 def test_array():
     arr = array.Array("arr")
     assert str(arr) == "arr"
@@ -33,9 +31,15 @@ def test_methods():
     arr = array.Array("arr")
     assert arr.replace_by_name(arr=(1, 2, 3)) == (1, 2, 3)
     assert arr[1].replace_by_name(arr=(1, 2, 3)).eval() == 2
-    assert arr.symbol_names() == {'arr', }
-    assert arr[1].symbol_names() == {'arr', }
-    assert (arr[1] + arr[0]).symbol_names() == {'arr', }
+    assert arr.symbol_names() == {
+        "arr",
+    }
+    assert arr[1].symbol_names() == {
+        "arr",
+    }
+    assert (arr[1] + arr[0]).symbol_names() == {
+        "arr",
+    }
 
 
 @pytest.mark.parametrize("libarray", all_impl.values(), ids=all_impl.keys())
@@ -62,22 +66,17 @@ def test_impl_numpy():
     v = np.asarray((1, 2, 3))
 
     expr = array.Array("arr") + 1
-    assert np.allclose(
-        expr.replace_by_name(arr=v).eval(),
-        v + 1
-    )
+    assert np.allclose(expr.replace_by_name(arr=v).eval(), v + 1)
 
     expr = scalar.cos(array.Array("arr"))
 
-    assert np.allclose(
-        expr.replace_by_name(arr=v).eval(libscalar=libscalar),
-        np.cos(v)
-    )
+    assert np.allclose(expr.replace_by_name(arr=v).eval(libscalar=libscalar), np.cos(v))
 
 
 def test_impl_scioy():
     try:
         import sympy as sy
+
         from symbolite.impl.array import sympy as libarray
     except ImportError:
         return
