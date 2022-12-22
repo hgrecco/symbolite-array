@@ -6,6 +6,10 @@ from symbolite.impl.array import default
 
 all_impl = {"default": default}
 
+x, y = map(scalar.Scalar, ("x", "y"))
+arr = array.Array("arr")
+v = array.Array("v")
+
 try:
     from symbolite.impl.array import numpy as npm
 
@@ -85,3 +89,37 @@ def test_impl_scioy():
     syarr = sy.IndexedBase("arr")
     assert arr.eval(libarray=libarray) == syarr
     assert arr[1].eval(libarray=libarray) == syarr[1]
+
+
+@pytest.mark.parametrize(
+    "expr,params,result",
+    [
+        (x + 2 * y, ("x", "y"), arr[0] + 2 * arr[1]),
+        (x + 2 * y, ("y", "x"), arr[1] + 2 * arr[0]),
+        (x + 2 * scalar.cos(y), ("y", "x"), arr[1] + 2 * scalar.cos(arr[0])),
+        (x + 2 * y, dict(x=3, y=5), arr[3] + 2 * arr[5]),
+        (x + 2 * y, dict(x=5, y=3), arr[5] + 2 * arr[3]),
+    ],
+)
+def test_vectorize(expr, params, result):
+    assert array.vectorize(expr, params, result)
+
+
+def test_vectorize_non_default_varname():
+    assert array.vectorize(x + 2 * y, ("x", "y"), v[0] + 2 * v[1])
+
+
+@pytest.mark.parametrize(
+    "expr,result",
+    [
+        (x + 2 * y, (("x", "y"), arr[0] + 2 * arr[1])),
+        (y + 2 * x, (("x", "y"), arr[1] + 2 * arr[0])),
+        (x + 2 * scalar.cos(y), (("x", "y"), arr[0] + 2 * scalar.cos(arr[1]))),
+    ],
+)
+def test_autovectorize(expr, result):
+    assert array.auto_vectorize(expr) == result
+
+
+def test_autovectorize_non_default_varname():
+    assert array.auto_vectorize(x + 2 * y, "v") == (("x", "y"), v[0] + 2 * v[1])
