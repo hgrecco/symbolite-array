@@ -9,7 +9,7 @@ create symbolic mathematical expressions. Just create a symbol
 This extension allows you to use arrays
 
 ```python
->>> from symbolite.abstract import array
+>>> from symbolite.array import abstract as array
 >>> arr = array.Array("arr")
 >>> expr1 = arr + 1
 >>> print(expr1)
@@ -19,7 +19,7 @@ This extension allows you to use arrays
 and you can get one item.
 
 ```python
->>> from symbolite.abstract import array
+>>> from symbolite.array import abstract as array
 >>> arr = array.Array("arr")
 >>> expr2 = arr[1] + 1
 >>> print(expr2)
@@ -29,7 +29,7 @@ and you can get one item.
 You can easily replace the symbols by the desired value.
 
 ```python
->>> expr3 = expr2.replace_by_name(arr=(1, 2, 3))
+>>> expr3 = expr2.subs_by_name(arr=(1, 2, 3))
 >>> print(expr3)
 ((1, 2, 3)[1] + 1)
 ```
@@ -52,7 +52,7 @@ into an expresion using a vector with scalar symbols occuping specific
 places within the array.
 
 ```python
->>> from symbolite.abstract import scalar
+>>> from symbolite.scalar import abstract as scalar
 >>> x = scalar.Scalar("x")
 >>> y = scalar.Scalar("y")
 >>> print(array.vectorize(x + scalar.cos(y), ("x", "y")))
@@ -71,7 +71,7 @@ mapping scalars names to indices
 If you want to replace all scalars automatically, auto
 
 ```python
->>> from symbolite.abstract import scalar
+>>> from symbolite.scalar import abstract as scalar
 >>> x = scalar.Scalar("x")
 >>> y = scalar.Scalar("y")
 >>> names, vexpr = array.auto_vectorize(x + scalar.cos(y))

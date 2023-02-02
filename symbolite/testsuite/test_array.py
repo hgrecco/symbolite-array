@@ -1,8 +1,9 @@
 import pytest
-from symbolite.mappers import Unsupported
+from symbolite.core.mappers import Unsupported
+from symbolite.scalar import abstract as scalar
 
-from symbolite.abstract import array, scalar
-from symbolite.impl.array import default
+from symbolite.array import abstract as array
+from symbolite.array import default
 
 all_impl = {"default": default}
 
@@ -33,8 +34,8 @@ def test_array():
 
 def test_methods():
     arr = array.Array("arr")
-    assert arr.replace_by_name(arr=(1, 2, 3)) == (1, 2, 3)
-    assert arr[1].replace_by_name(arr=(1, 2, 3)).eval() == 2
+    assert arr.subs_by_name(arr=(1, 2, 3)) == (1, 2, 3)
+    assert arr[1].subs_by_name(arr=(1, 2, 3)).eval() == 2
     assert arr.symbol_names() == {
         "arr",
     }
@@ -80,7 +81,6 @@ def test_impl_numpy():
 def test_impl_scioy():
     try:
         import sympy as sy
-
         from symbolite.impl.array import sympy as libarray
     except ImportError:
         return

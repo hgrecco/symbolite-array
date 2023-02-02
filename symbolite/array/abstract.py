@@ -4,38 +4,33 @@
 
     Function and values for array operations.
 
-    :copyright: 2022 by Symbolite-array Authors, see AUTHORS for more details.
+    :copyright: 2023 by Symbolite-array Authors, see AUTHORS for more details.
     :license: BSD, see LICENSE for more details.
 """
 
 
 from __future__ import annotations
 
-import operator
-
-from symbolite.operands import Function, Named, Operator, SymbolicExpression
-
-from symbolite.abstract import scalar
+from symbolite.core.operands import Function, OperandMixin
+from symbolite.scalar import abstract as scalar
+from symbolite.symbol import abstract as symbol
 
 NAMESPACE = "libarray"
-
-op_getitem = Operator.from_operator(operator.getitem, "{}[{}]", NAMESPACE)
 
 sum = Function("sum", namespace=NAMESPACE, arity=1)
 prod = Function("prod", namespace=NAMESPACE, arity=1)
 
 
-class Array(Named, SymbolicExpression):
-    def __getitem__(self, item):
-        return op_getitem(self, item)
+class Array(symbol.Symbol):
+    pass
 
 
 def vectorize(
-    expr: SymbolicExpression,
+    expr: OperandMixin,
     symbol_names: tuple[str, ...] | dict[str, int],
     varname="arr",
-) -> SymbolicExpression:
-    """Vectorize expression by replacing scalar symbols
+) -> OperandMixin:
+    """Vectorize expression by replacing test_scalar symbols
     by an array at a given indices.
 
     Parameters
@@ -56,11 +51,11 @@ def vectorize(
     arr = Array(varname)
 
     reps = {scalar.Scalar(name): arr[ndx] for ndx, name in it}
-    return expr.replace(reps)
+    return expr.subs(reps)
 
 
-def auto_vectorize(expr, varname="arr") -> tuple[tuple[str, ...], SymbolicExpression]:
-    """Vectorize expression by replacing all scalar symbols
+def auto_vectorize(expr, varname="arr") -> tuple[tuple[str, ...], OperandMixin]:
+    """Vectorize expression by replacing all test_scalar symbols
     by an array at a given indices. Symbols are ordered into
     the array alphabetically.
 
