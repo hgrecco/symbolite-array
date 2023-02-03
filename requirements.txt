@@ -1,1 +1,1 @@
-symbolite>=0.2
+symbolite>=0.3
