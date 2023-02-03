@@ -12,7 +12,7 @@
 import operator
 
 import numpy as np
-from symbolite.translators import Unsupported
+from symbolite.core.translators import Unsupported
 
 op_getitem = operator.getitem
 
