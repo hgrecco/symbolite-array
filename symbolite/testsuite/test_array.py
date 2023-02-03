@@ -72,11 +72,11 @@ def test_impl_numpy():
     v = np.asarray((1, 2, 3))
 
     expr = array.Array("arr") + 1
-    assert np.allclose(expr.replace_by_name(arr=v).eval(), v + 1)
+    assert np.allclose(expr.subs_by_name(arr=v).eval(), v + 1)
 
     expr = scalar.cos(array.Array("arr"))
 
-    assert np.allclose(expr.replace_by_name(arr=v).eval(libscalar=libscalar), np.cos(v))
+    assert np.allclose(expr.subs_by_name(arr=v).eval(libscalar=libscalar), np.cos(v))
 
 
 def test_impl_scioy():
