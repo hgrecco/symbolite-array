@@ -1,9 +1,9 @@
 import pytest
-from symbolite.core.mappers import Unsupported
-from symbolite.scalar import abstract as scalar
 
 from symbolite.array import abstract as array
 from symbolite.array import default
+from symbolite.core.mappers import Unsupported
+from symbolite.scalar import abstract as scalar
 
 all_impl = {"default": default}
 
@@ -12,14 +12,14 @@ arr = array.Array("arr")
 v = array.Array("v")
 
 try:
-    from symbolite.impl.array import numpy as npm
+    from symbolite.array import numpy as npm
 
     all_impl["numpy"] = npm
 except ImportError:
     pass
 
 try:
-    from symbolite.impl.array import sympy as spm
+    from symbolite.array import sympy as spm
 
     all_impl["sympy"] = spm
 except ImportError:
@@ -64,7 +64,8 @@ def test_impl(libarray):
 def test_impl_numpy():
     try:
         import numpy as np
-        from symbolite.impl.scalar import numpy as libscalar
+
+        from symbolite.scalar import numpy as libscalar
     except ImportError:
         return
 
@@ -81,7 +82,8 @@ def test_impl_numpy():
 def test_impl_scioy():
     try:
         import sympy as sy
-        from symbolite.impl.array import sympy as libarray
+
+        from symbolite.array import sympy as libarray
     except ImportError:
         return
 

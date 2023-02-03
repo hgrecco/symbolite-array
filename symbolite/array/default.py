@@ -1,8 +1,8 @@
 """
-    symbolite.impl.array.default
+    symbolite.array.default
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    Translate symbolite.abstract.array into values and functions
+    Translate symbolite.array.abstract into values and functions
     defined in Python's math module.
 
     :copyright: 2023 by Symbolite-array Authors, see AUTHORS for more details.

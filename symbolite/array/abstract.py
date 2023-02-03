@@ -1,5 +1,5 @@
 """
-    symbolite.abstract.array
+    symbolite.array.abstract
     ~~~~~~~~~~~~~~~~~~~~~~~~
 
     Function and values for array operations.
